@@ -1,0 +1,5 @@
+@model IEnumerable<DataLayer.Page>
+@{ ViewBag.Title = "نتایج جستجو"; }
+<div class="listing-layout"><div><nav class="breadcrumbs"><a href="/">خانه</a><i class="fa fa-angle-left"></i><span>نتایج جستجو</span></nav><div class="section-heading"><h1>نتایج جستجو برای «@ViewBag.Name»</h1></div>
+@if (Model.Any()) { <div class="article-grid">@foreach (var item in Model) { <article class="article-card"><a class="article-card-image" href="/News/@item.PageID"><img src="/PageImages/@item.ImageName" alt="@item.Title" loading="lazy" /></a><div class="article-card-body"><span class="category-pill">@(item.PageGroup != null ? item.PageGroup.GroupTitle : "مقاله")</span><h3><a href="/News/@item.PageID">@item.Title</a></h3><p>@item.ShortDescription</p><div class="article-card-meta"><i class="fa fa-calendar-o"></i> @item.CreateDate.ToShamsi()</div></div></article> }</div> }
+else { <div class="empty-card"><i class="fa fa-file-text-o"></i><h2>مطلبی یافت نشد</h2><p>مقاله‌های منتشرشده در این بخش نمایش داده می‌شوند.</p></div> }</div><aside class="article-sidebar">@Html.Action("TopNews", "News")@Html.Action("ShowGroups", "News")</aside></div>

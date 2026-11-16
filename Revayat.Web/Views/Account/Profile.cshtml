@@ -1,0 +1,10 @@
+@model Revayat.Web.Models.ApplicationUser
+@{ ViewBag.Title = "حساب من"; }
+<div class="login-wrap"><div class="login-card"><div class="login-mark"><img src="/Content/img/revayat-mark.svg" alt="" /><h1>حساب من</h1><p>اطلاعات عضویت شما در روایت</p></div>
+@if (TempData["Message"] != null) { <p class="profile-message">@TempData["Message"]</p> }
+<div class="profile-row"><span>نام کاربری</span><strong>@Model.UserName</strong></div>
+<div class="profile-row"><span>ایمیل</span><strong>@Model.Email</strong></div>
+<a href="/Account/ChangePassword" class="button button-gold">تغییر رمز عبور</a>
+@if (User.IsInRole("Admin")) { <a href="/Admin" class="back-home">ورود به پنل مدیریت</a> }
+@using (Html.BeginForm("SignOut", "Account", FormMethod.Post)) { @Html.AntiForgeryToken() <button class="profile-logout" type="submit">خروج از حساب</button> }
+</div></div>

@@ -1,0 +1,29 @@
+# Visual Studio and build output
+.vs/
+**/bin/
+**/obj/
+*.user
+*.suo
+*.cache
+*.log
+
+# Legacy NuGet packages.config restore output
+packages/
+artifacts/
+
+# Local databases and uploaded content
+Revayat.Web/App_Data/*
+!Revayat.Web/App_Data/.gitkeep
+Revayat.Web/PageImages/*
+!Revayat.Web/PageImages/.gitkeep
+
+# Local publish settings
+**/*.pubxml.user
+
+# Local secrets and deployment credentials
+.env
+.env.*
+*.publishsettings
+*.pfx
+*.pem
+*.key

@@ -1,0 +1,2 @@
+@model IEnumerable<DataLayer.PageGroup>
+@foreach (var group in Model.Take(5)) { <a href="@Url.Action("ShowNewsByGroupId", "News", new { id = group.GroupID, title = group.GroupTitle })">@group.GroupTitle</a> }

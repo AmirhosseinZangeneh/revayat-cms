@@ -1,0 +1,7 @@
+@model IEnumerable<DataLayer.Page>
+@{ ViewBag.Title = "مدیریت مقاله‌ها"; }
+<div class="admin-page-heading"><div><h1>مدیریت مقاله‌ها</h1><p>فهرست مقاله‌های منتشرشده در روایت</p></div><a href="/Admin/Pages/Create" class="admin-primary"><i class="fa fa-plus"></i> مقاله جدید</a></div>
+<section class="admin-panel"><div class="panel-heading"><h2><i class="fa fa-file-text-o"></i> همه مقاله‌ها</h2><span>@Model.Count() مقاله</span></div>
+@if (Model.Any()) { <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>عنوان مقاله</th><th>دسته‌بندی</th><th>بازدید</th><th>برگزیده</th><th>تاریخ انتشار</th><th>عملیات</th></tr></thead><tbody>@foreach (var item in Model) { <tr><td><div class="table-title"><img src="/PageImages/@item.ImageName" alt="" /><strong>@item.Title</strong></div></td><td><span class="table-pill">@item.PageGroup.GroupTitle</span></td><td>@item.Visit</td><td>@(item.ShowInSlider ? "بله" : "خیر")</td><td>@item.CreateDate.ToShamsi()</td><td class="table-actions"><a href="/News/@item.PageID">نمایش</a><a href="/Admin/Pages/Edit/@item.PageID">ویرایش</a><a href="/Admin/Pages/Delete/@item.PageID">حذف</a></td></tr> }</tbody></table></div> }
+else { <div class="admin-empty">هنوز مقاله‌ای وجود ندارد. <a href="/Admin/Pages/Create">اولین مقاله را ایجاد کنید.</a></div> }
+</section>

@@ -1,0 +1,16 @@
+@model IEnumerable<DataLayer.PageGroup>
+@{ ViewBag.Title = "دسته‌بندی‌ها"; }
+<div class="admin-page-heading"><div><h1>دسته‌بندی‌ها</h1><p>موضوعات مقاله‌های روایت را مدیریت کنید.</p></div><button class="admin-primary" id="btnNewGroup" type="button"><i class="fa fa-plus"></i> دسته‌بندی جدید</button></div>
+<section class="admin-panel"><div class="panel-heading"><h2><i class="fa fa-folder-open-o"></i> همه دسته‌بندی‌ها</h2><span>@Model.Count() دسته</span></div>
+@if (Model.Any()) { <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>عنوان دسته‌بندی</th><th>عملیات</th></tr></thead><tbody>@foreach (var item in Model) { <tr><td><strong>@item.GroupTitle</strong></td><td class="table-actions"><button type="button" onclick="editGroup(@item.GroupID)">ویرایش</button><button type="button" onclick="deleteGroup(@item.GroupID)">حذف</button></td></tr> }</tbody></table></div> }
+else { <p class="admin-empty">هنوز دسته‌بندی‌ای ایجاد نشده است.</p> }
+</section>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="بستن"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="myModalLabel"></h4></div><div class="modal-body" id="myModalBody"></div></div></div></div>
+@section scripts {
+
+<script>
+$("#btnNewGroup").click(function(){ $.get("/Admin/PageGroups/Create",function(result){ $("#myModal").modal(); $("#myModalLabel").text("دسته‌بندی جدید"); $("#myModalBody").html(result); }); });
+function editGroup(id){ $.get("/Admin/PageGroups/Edit/"+id,function(result){ $("#myModal").modal(); $("#myModalLabel").text("ویرایش دسته‌بندی"); $("#myModalBody").html(result); }); }
+function deleteGroup(id){ $.get("/Admin/PageGroups/Delete/"+id,function(result){ $("#myModal").modal(); $("#myModalLabel").text("حذف دسته‌بندی"); $("#myModalBody").html(result); }); }
+</script>
+}

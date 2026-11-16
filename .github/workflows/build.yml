@@ -1,0 +1,28 @@
+name: Build and check
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: microsoft/setup-msbuild@v3
+      - uses: NuGet/setup-nuget@v3
+      - name: Restore packages
+        run: nuget restore RevayatCMS.sln
+      - name: Check dotnet build
+        run: dotnet build RevayatCMS.sln --no-restore -m:1 --verbosity minimal
+      - name: Build solution
+        run: msbuild RevayatCMS.sln /t:Build /p:Configuration=Debug /p:MvcBuildViews=true /v:minimal /nologo
+      - name: Check password hashing
+        shell: powershell
+        run: ./tests/PasswordHashSmoke.ps1
+      - name: Check image uploads
+        shell: powershell
+        run: ./tests/ImageUploadSmoke.ps1

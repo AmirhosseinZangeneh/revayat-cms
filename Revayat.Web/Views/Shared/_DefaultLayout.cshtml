@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#064e4b" />
+    <title>@(ViewBag.Title ?? "روایت") | روایت</title>
+    <link rel="stylesheet" href="/Content/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="/Content/css/revayat.css" />
+    <script src="/Content/js/jquery.min.js"></script>
+</head>
+<body class="public-site">
+    <div class="utility-bar">
+        <div class="site-container utility-inner">
+            <span><i class="fa fa-calendar-o"></i> @DateTime.Now.ToShamsi()</span>
+            <div class="utility-links">
+                <a href="/Home/About">درباره روایت</a><span class="divider">|</span>
+                <a href="/Archive">آرشیو مطالب</a><span class="divider">|</span>
+                @if (User.Identity.IsAuthenticated) {
+                    <a href="/Account/Profile">حساب من</a>
+                    if (User.IsInRole("Admin")) { <a href="/Admin">پنل مدیریت</a> }
+                }
+                else { <a href="/Account/Login">ورود</a><a href="/Account/Register">ثبت‌نام</a> }
+            </div>
+        </div>
+    </div>
+    <header class="site-header">
+        <div class="site-container brand-row">
+            <a href="/" class="brand" aria-label="روایت، صفحه اصلی">
+                <img src="/Content/img/revayat-mark.svg" alt="" />
+                <span><strong>روایت</strong><small>RevayatCMS</small></span>
+            </a>
+            <form action="/Search" method="get" role="search" class="site-search">
+                <button aria-label="جستجو"><i class="fa fa-search"></i></button>
+                <input type="search" name="q" value="@Request.QueryString["q"]" placeholder="جستجو در روایت..." />
+            </form>
+            <div class="auth-actions" aria-label="حساب کاربری">
+                @if (User.Identity.IsAuthenticated) {
+                    <a class="auth-button auth-button-outline" href="/Account/Profile"><i class="fa fa-user-o" aria-hidden="true"></i> حساب من</a>
+                    if (User.IsInRole("Admin")) { <a class="auth-button auth-button-primary" href="/Admin"><i class="fa fa-dashboard" aria-hidden="true"></i> پنل مدیریت</a> }
+                } else {
+                    <a class="auth-button auth-button-outline" href="/Account/Login"><i class="fa fa-sign-in" aria-hidden="true"></i> ورود</a>
+                    <a class="auth-button auth-button-primary" href="/Account/Register"><i class="fa fa-user-plus" aria-hidden="true"></i> ثبت‌نام</a>
+                }
+            </div>
+            <div class="brand-tagline">روایت امروز از فرهنگ،<br />تاریخ و جامعه</div>
+            <button class="menu-toggle" type="button" aria-label="باز کردن فهرست" aria-expanded="false" aria-controls="site-navigation"><i class="fa fa-bars"></i></button>
+        </div>
+    </header>
+    <nav class="site-nav" id="site-navigation" aria-label="فهرست اصلی">
+        <div class="site-container nav-inner">
+            <a class="nav-home" href="/"><i class="fa fa-home"></i> صفحه اصلی</a>
+            <a href="/Archive">تازه‌ترین مطالب</a>
+            @Html.Action("ShowGroupsInMenu", "News")
+            <a href="/Home/About">درباره روایت</a>
+        </div>
+    </nav>
+    <main class="site-container site-main">@RenderBody()</main>
+    <footer class="site-footer">
+        <div class="site-container footer-grid">
+            <div><a href="/" class="footer-brand">روایت <span>RevayatCMS</span></a><p>سامانه‌ای برای انتشار روایت‌های خواندنی از فرهنگ، تاریخ و جامعه.</p></div>
+            <div><h3>دسترسی سریع</h3><a href="/">صفحه اصلی</a><a href="/Archive">آرشیو مطالب</a><a href="/Home/About">درباره روایت</a></div>
+            <div><h3>حساب کاربری</h3>
+                @if (User.Identity.IsAuthenticated) {
+                    <a href="/Account/Profile">حساب من</a>
+                    if (User.IsInRole("Admin")) { <a href="/Admin">پنل مدیریت</a> }
+                } else {
+                    <a href="/Account/Register">ثبت‌نام</a><a href="/Account/Login">ورود</a>
+                }
+                <a href="/Archive">همه مقاله‌ها</a></div>
+            <div class="footer-art" aria-hidden="true">✦<span>روایت هر روز، برای فردا</span></div>
+        </div>
+        <div class="site-container footer-bottom">© @DateTime.Now.Year روایت. همه حقوق محفوظ است.</div>
+    </footer>
+    <nav class="mobile-bottom-nav" aria-label="میان‌برهای موبایل">
+        <a href="/"><i class="fa fa-home"></i><span>خانه</span></a>
+        <a href="/Archive"><i class="fa fa-newspaper-o"></i><span>مطالب</span></a>
+        <a href="/Archive"><i class="fa fa-th-large"></i><span>آرشیو</span></a>
+        <a href="@(User.Identity.IsAuthenticated ? "/Account/Profile" : "/Account/Login")"><i class="fa fa-user-o"></i><span>من</span></a>
+    </nav>
+    <script>
+        (function () {
+            var button = document.querySelector('.menu-toggle');
+            var nav = document.getElementById('site-navigation');
+            if (button && nav) button.addEventListener('click', function () {
+                var open = nav.classList.toggle('is-open');
+                button.setAttribute('aria-expanded', open ? 'true' : 'false');
+            });
+        })();
+    </script>
+    @RenderSection("Scripts", false)
+</body>
+</html>

@@ -1,0 +1,44 @@
+@model DataLayer.Page
+@{ ViewBag.Title = Model.Title; }
+<div class="article-layout">
+    <article class="article-detail">
+        <nav class="breadcrumbs" aria-label="مسیر صفحه"><a href="/">خانه</a><i class="fa fa-angle-left"></i><a href="/Archive">مطالب</a><i class="fa fa-angle-left"></i><a href="@Url.Action("ShowNewsByGroupId", "News", new { id = Model.GroupID, title = Model.PageGroup.GroupTitle })">@Model.PageGroup.GroupTitle</a></nav>
+        <header class="article-header"><span class="category-pill">@Model.PageGroup.GroupTitle</span><h1>@Model.Title</h1><div class="article-meta"><span><i class="fa fa-calendar-o"></i> @Model.CreateDate.ToShamsi()</span><span><i class="fa fa-eye"></i> @Model.Visit بازدید</span><span><i class="fa fa-clock-o"></i> زمان مطالعه: حدود @Math.Max(1, (Model.Text ?? "").Length / 1000) دقیقه</span></div></header>
+        <figure class="article-hero"><img src="/PageImages/@Model.ImageName" alt="@Model.Title" /></figure>
+        <div class="article-intro">@Model.ShortDescription</div>
+        <div class="article-body">@Html.Raw(Model.Text)</div>
+        <div class="article-tags"><strong>برچسب‌ها:</strong>@foreach (var tag in (Model.Tags ?? "").Split(new[] { ',' }, System.StringSplitOptions.RemoveEmptyEntries)) { <a href="@Url.Action("Index", "Search", new { q = tag.Trim() })"># @tag.Trim()</a> }</div>
+        <div class="article-actions"><a href="#comments"><i class="fa fa-comment-o"></i> دیدگاه‌ها (@Model.PageComments.Count)</a><button type="button" onclick="if(navigator.share){navigator.share({title:document.title,url:location.href})}else{navigator.clipboard.writeText(location.href);this.innerText='پیوند کپی شد'}"><i class="fa fa-share-alt"></i> اشتراک‌گذاری</button></div>
+        <section class="comments-card" id="comments">
+            <div class="section-heading"><h2><i class="fa fa-comments-o"></i> دیدگاه‌ها (@Model.PageComments.Count)</h2></div>
+            <ul id="commentList" class="comment-list">@Html.Action("ShowComments", new { id = Model.PageID })</ul>
+            @if (User.Identity.IsAuthenticated) {
+                <h3>دیدگاه خود را بنویسید</h3>
+                <p class="comment-as">ثبت دیدگاه با نام @User.Identity.Name</p>
+                <form class="comment-form" method="post" onsubmit="addComment(); return false;">
+                    @Html.AntiForgeryToken()
+                    <label>متن دیدگاه<textarea id="txtComment" required maxlength="500" rows="5"></textarea></label>
+                    <button class="button button-gold" type="submit">ارسال دیدگاه <i class="fa fa-paper-plane-o"></i></button>
+                    <p id="commentError" class="form-error" role="alert"></p>
+                </form>
+            } else {
+                <p class="comment-login">برای ثبت دیدگاه <a href="@Url.Action("Login", "Account", new { returnUrl = Request.RawUrl })">وارد شوید</a> یا <a href="/Account/Register">حساب بسازید</a>.</p>
+            }
+        </section>
+    </article>
+    <aside class="article-sidebar">@Html.Action("TopNews", "News")@Html.Action("ShowGroups", "News")</aside>
+</div>
+@section Scripts {
+<script>
+function addComment() {
+    $.ajax({url: "/News/AddComment/@Model.PageID", type: "POST", data: {
+        __RequestVerificationToken: $(".comment-form input[name='__RequestVerificationToken']").val(),
+        Comment: $("#txtComment").val()
+    }}).done(function (result) {
+        $("#commentError").text(""); $("#commentList").html(result); $("#txtComment").val("");
+    }).fail(function (xhr) {
+        $("#commentError").text(xhr.status === 401 ? "نشست شما پایان یافته است؛ دوباره وارد شوید." : "ثبت دیدگاه ناموفق بود. متن دیدگاه را بررسی کنید.");
+    });
+}
+</script>
+}

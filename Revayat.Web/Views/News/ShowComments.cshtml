@@ -1,0 +1,5 @@
+@model IEnumerable<DataLayer.PageComment>
+@foreach (var item in Model) {
+<li class="comment-item"><div class="comment-avatar"><i class="fa fa-user-o"></i></div><div><div class="comment-head"><strong>@item.Name</strong><time>@item.CreateDate.ToShamsi()</time></div><p>@item.Comment</p></div></li>
+}
+@if (!Model.Any()) { <li class="comment-empty">هنوز دیدگاهی ثبت نشده است. نخستین دیدگاه را شما بنویسید.</li> }

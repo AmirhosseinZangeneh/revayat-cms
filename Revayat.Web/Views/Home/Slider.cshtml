@@ -1,0 +1,22 @@
+@model IEnumerable<DataLayer.Page>
+@{ var featured = Model.FirstOrDefault(); }
+@if (featured != null)
+{
+    <section class="featured-card" aria-label="مطلب برگزیده">
+        <div class="featured-image"><img src="/PageImages/@featured.ImageName" alt="@featured.Title" loading="eager" /></div>
+        <div class="featured-copy">
+            <span class="category-pill"><i class="fa fa-bookmark-o"></i> @(featured.PageGroup != null ? featured.PageGroup.GroupTitle : "برگزیده")</span>
+            <h1><a href="/News/@featured.PageID">@featured.Title</a></h1>
+            <p>@featured.ShortDescription</p>
+            <a class="button button-gold" href="/News/@featured.PageID">ادامه مطلب <i class="fa fa-arrow-left"></i></a>
+            <div class="featured-meta"><span><i class="fa fa-calendar-o"></i> @featured.CreateDate.ToShamsi()</span><span><i class="fa fa-eye"></i> @featured.Visit بازدید</span></div>
+        </div>
+    </section>
+}
+else
+{
+    <section class="featured-card featured-empty" aria-label="آغاز روایت">
+        <div class="featured-image"><img src="/Content/img/revayat-hero.png" alt="تصویرسازی گنبد و معماری ایرانی" /></div>
+        <div class="featured-copy"><span class="category-pill"><i class="fa fa-bookmark-o"></i> روایت تازه</span><h1>داستان‌ها از اینجا آغاز می‌شوند</h1><p>هنوز مطلبی منتشر نشده است. پس از انتشار اولین مقاله، روایت برگزیدهٔ شما در این بخش نمایش داده می‌شود.</p><a class="button button-gold" href="/Archive">دیدن آرشیو <i class="fa fa-arrow-left"></i></a></div>
+    </section>
+}

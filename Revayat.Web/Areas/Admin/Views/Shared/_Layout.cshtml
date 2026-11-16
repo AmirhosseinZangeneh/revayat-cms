@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>@(ViewBag.Title ?? "مدیریت") | روایت</title>
+<link rel="stylesheet" href="/Content/css/bootstrap-rtl.min.css" />
+<link rel="stylesheet" href="/Content/css/font-awesome.min.css" />
+<link rel="stylesheet" href="/Content/css/revayat.css" />
+<link rel="stylesheet" href="/Content/css/revayat-admin.css" />
+</head>
+<body class="admin-site">
+<aside class="admin-sidebar" id="admin-sidebar">
+    <a class="admin-brand" href="/Admin"><img src="/Content/img/revayat-mark.svg" alt="" /><span><strong>روایت</strong><small>RevayatCMS</small></span></a>
+    <nav aria-label="فهرست مدیریت">
+        <a href="/Admin" class="@(Request.Url.AbsolutePath.TrimEnd('/').Equals("/Admin", StringComparison.OrdinalIgnoreCase) || Request.Url.AbsolutePath.IndexOf("/Dashboard", StringComparison.OrdinalIgnoreCase) >= 0 ? "active" : "")"><i class="fa fa-tachometer"></i> داشبورد</a>
+        <a href="/Admin/Pages"><i class="fa fa-file-text-o"></i> مدیریت مقاله‌ها</a>
+        <a href="/Admin/PageGroups"><i class="fa fa-folder-open-o"></i> دسته‌بندی‌ها</a>
+        <a href="/Admin/Pages/Create"><i class="fa fa-plus-circle"></i> مقاله جدید</a>
+        <a href="/"><i class="fa fa-external-link"></i> مشاهده سایت</a>
+    </nav>
+    <div class="admin-sidebar-art"><span>✦</span><p>روایت‌های تازه از اینجا آغاز می‌شوند.</p></div>
+</aside>
+<div class="admin-shell">
+    <header class="admin-topbar">
+        <button type="button" class="admin-menu-toggle" aria-label="باز کردن فهرست" aria-controls="admin-sidebar" aria-expanded="false"><i class="fa fa-bars"></i></button>
+        <div><strong>پنل مدیریت روایت</strong><small>مدیریت محتوا و مشاهده عملکرد</small></div>
+        <div class="admin-top-actions"><a href="/" title="مشاهده سایت"><i class="fa fa-external-link"></i></a><a class="admin-user" href="/Account/Profile"><i class="fa fa-user"></i> @User.Identity.Name</a></div>
+    </header>
+    <main class="admin-content">@RenderBody()</main>
+</div>
+<nav class="admin-mobile-nav" aria-label="میان‌برهای مدیریت"><a href="/Admin"><i class="fa fa-home"></i>داشبورد</a><a href="/Admin/Pages"><i class="fa fa-file-text-o"></i>مقاله‌ها</a><a href="/Admin/Pages/Create"><i class="fa fa-plus"></i>مقاله جدید</a><a href="/Admin/PageGroups"><i class="fa fa-folder-o"></i>دسته‌ها</a></nav>
+<script src="/Content/js/jquery.min.js"></script>
+<script src="/Content/js/bootstrap.min.js"></script>
+<script src="/Scripts/jquery.validate.min.js"></script>
+<script src="/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script>
+(function(){var b=document.querySelector('.admin-menu-toggle'),n=document.querySelector('.admin-sidebar');if(b&&n)b.addEventListener('click',function(){var open=n.classList.toggle('is-open');b.setAttribute('aria-expanded',open?'true':'false')})})();
+</script>
+@RenderSection("scripts", false)
+</body>
+</html>

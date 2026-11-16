@@ -1,0 +1,5 @@
+@model IEnumerable<DataLayer.Page>
+<section class="sidebar-card"><div class="sidebar-heading"><h2><i class="fa fa-fire"></i> پربازدیدترین‌ها</h2></div>
+@if (Model.Any()) { <ol class="popular-list">@{ var rank = 0; }@foreach (var item in Model.Take(5)) { rank++; <li><span class="rank">@rank</span><a href="/News/@item.PageID"><strong>@item.Title</strong><small>@item.Visit بازدید</small></a><img src="/PageImages/@item.ImageName" alt="" loading="lazy" /></li> }</ol> }
+else { <p class="sidebar-empty">با انتشار مطالب، پربازدیدترین روایت‌ها اینجا نمایش داده می‌شوند.</p> }
+</section>

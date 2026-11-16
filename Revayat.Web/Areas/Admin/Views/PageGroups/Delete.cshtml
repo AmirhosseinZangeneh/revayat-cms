@@ -1,0 +1,33 @@
+﻿@model DataLayer.PageGroup
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+
+<h3>آیا از حذف "@Model.GroupTitle" مطمئن هستید ؟</h3>
+@if (ViewBag.PageCount > 0)
+{
+    <p class="text-danger">این گروه @ViewBag.PageCount مقاله دارد. پیش از حذف، مقاله‌ها را به گروه دیگری منتقل کنید.</p>
+}
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.GroupTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GroupTitle)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="حذف گروه" class="btn btn-danger" disabled="@(ViewBag.PageCount > 0 ? "disabled" : null)" />
+        </div>
+    }
+</div>

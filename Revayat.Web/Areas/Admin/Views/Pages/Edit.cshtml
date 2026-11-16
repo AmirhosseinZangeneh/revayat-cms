@@ -1,0 +1,27 @@
+@model DataLayer.Page
+@{ ViewBag.Title = "ویرایش مقاله"; }
+<div class="admin-page-heading"><div><h1>ویرایش مقاله</h1><p>اطلاعات مقاله را وارد کرده و ذخیره کنید.</p></div><a href="/Admin/Pages" class="admin-primary"><i class="fa fa-arrow-right"></i> بازگشت به فهرست</a></div>
+@using (Html.BeginForm("Edit", "Pages", FormMethod.Post, new { enctype = "multipart/form-data" })) {
+@Html.AntiForgeryToken()
+@Html.HiddenFor(model => model.PageID)
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<div class="editor-grid">
+<section class="admin-panel editor-panel"><h2>محتوای مقاله</h2>
+<label class="admin-field">عنوان مقاله @Html.TextBoxFor(model => model.Title, new { placeholder = "عنوانی روشن و کوتاه بنویسید", maxlength = "250" }) @Html.ValidationMessageFor(model => model.Title)</label>
+<label class="admin-field">خلاصه مقاله @Html.TextAreaFor(model => model.ShortDescription, new { placeholder = "خلاصه‌ای برای معرفی مقاله", maxlength = "350", rows = "4" }) @Html.ValidationMessageFor(model => model.ShortDescription)</label>
+<label class="admin-field">متن مقاله @Html.TextAreaFor(model => model.Text, new { rows = "13" }) @Html.ValidationMessageFor(model => model.Text)</label>
+</section>
+<aside class="admin-panel editor-panel"><h2>تنظیمات انتشار</h2>
+<label class="admin-field">دسته‌بندی @Html.DropDownList("GroupID", null, "انتخاب دسته‌بندی") @Html.ValidationMessageFor(model => model.GroupID)</label>
+<label class="admin-field">تصویر شاخص <input type="file" name="imgUp" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"  /> @Html.ValidationMessageFor(model => model.ImageName)</label>
+<img class="editor-preview" src="/PageImages/@Model.ImageName" alt="تصویر فعلی مقاله" />
+<label class="admin-field">برچسب‌ها @Html.TextBoxFor(model => model.Tags, new { placeholder = "برچسب‌ها را با ویرگول جدا کنید" }) @Html.ValidationMessageFor(model => model.Tags)</label>
+<label class="admin-field">@Html.CheckBoxFor(model => model.ShowInSlider) نمایش در بخش برگزیده @Html.ValidationMessageFor(model => model.ShowInSlider)</label>
+<div class="editor-actions"><button class="admin-primary" type="submit"><i class="fa fa-check"></i> ذخیره تغییرات</button><a href="/Admin/Pages">انصراف</a></div>
+</aside>
+</div>
+}
+@section scripts {
+<script src="/ckeditor/ckeditor.js"></script><script src="/ckeditor/adapters/jquery.js"></script>
+<script>$(function(){ $('#Text').ckeditor(); });</script>
+}

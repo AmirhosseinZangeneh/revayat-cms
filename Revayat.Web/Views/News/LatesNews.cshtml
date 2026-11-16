@@ -1,0 +1,16 @@
+@model IEnumerable<DataLayer.Page>
+<section class="latest-section">
+    <div class="section-heading"><h2><i class="fa fa-newspaper-o"></i> آخرین مطالب</h2><a href="/Archive">مشاهده همه <i class="fa fa-arrow-left"></i></a></div>
+    @if (Model.Any()) {
+        <div class="article-grid">
+        @foreach (var item in Model.Take(6)) {
+            <article class="article-card">
+                <a class="article-card-image" href="/News/@item.PageID"><img src="/PageImages/@item.ImageName" alt="@item.Title" loading="lazy" /></a>
+                <div class="article-card-body"><span class="category-pill">@(item.PageGroup != null ? item.PageGroup.GroupTitle : "مقاله")</span><h3><a href="/News/@item.PageID">@item.Title</a></h3><p>@item.ShortDescription</p><div class="article-card-meta"><i class="fa fa-calendar-o"></i> @item.CreateDate.ToShamsi()</div></div>
+            </article>
+        }
+        </div>
+    } else {
+        <div class="empty-card"><i class="fa fa-file-text-o"></i><h3>هنوز مطلبی منتشر نشده است</h3><p>مقاله‌های تازه پس از انتشار در این بخش قرار می‌گیرند.</p></div>
+    }
+</section>

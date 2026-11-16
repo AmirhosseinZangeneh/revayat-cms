@@ -1,0 +1,14 @@
+@{ ViewBag.Title = "خانه"; }
+<div class="home-grid">
+    <div class="home-primary">
+        @Html.Action("Slider")
+        <div class="topic-strip"><strong>موضوعات پرطرفدار:</strong><a href="/Archive"># فرهنگ و هنر</a><a href="/Archive"># تاریخ ایران</a><a href="/Archive"># ادبیات</a><a href="/Archive"># جامعه</a></div>
+        @Html.Action("LatesNews", "News")
+    </div>
+    <aside class="home-sidebar" aria-label="پیشنهادهای روایت">
+        @Html.Action("TopNews", "News")
+        @Html.Action("ShowGroups", "News")
+        <div class="sidebar-note"><span class="note-symbol">❝</span><p>هر روایت، دریچه‌ای تازه برای دیدن جهان پیرامون ماست.</p><small>روایت</small></div>
+    </aside>
+</div>
+<section class="follow-band"><div><span class="follow-icon"><i class="fa fa-envelope-o"></i></span><div><h2>با روایت همراه باشید</h2><p>تازه‌ترین مطالب و روایت‌های خواندنی را در آرشیو دنبال کنید.</p></div></div><a href="/Archive" class="button button-gold">مشاهده آرشیو <i class="fa fa-arrow-left"></i></a></section>
