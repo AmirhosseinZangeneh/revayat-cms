@@ -1,0 +1,16 @@
+# Bundled third-party assets are kept for the legacy MVC application.
+# GitHub Linguist should count the application code, not these libraries.
+Revayat.Web/ckeditor/** linguist-vendored
+Revayat.Web/Scripts/** linguist-vendored
+Revayat.Web/Content/js/bootstrap.min.js linguist-vendored
+Revayat.Web/Content/js/jquery.min.js linguist-vendored
+Revayat.Web/Content/js/modernizr.js linguist-vendored
+Revayat.Web/Content/js/owl.carousel.js linguist-vendored
+Revayat.Web/Content/js/wow.js linguist-vendored
+Revayat.Web/Content/bootstrap-rtl.css linguist-vendored
+Revayat.Web/Content/bootstrap.css linguist-vendored
+Revayat.Web/Content/bootstrap.min.css linguist-vendored
+Revayat.Web/Content/css/bootstrap-rtl.min.css linguist-vendored
+Revayat.Web/Content/css/bootstrap.min.css linguist-vendored
+Revayat.Web/Content/css/font-awesome.min.css linguist-vendored
+Revayat.Web/Content/css/owl.carousel.css linguist-vendored
